@@ -1,0 +1,49 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(35, 78, 110);
+    font-family: sans-serif;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    color: white;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 300;
+}
+
+.searchCity {
+    width: 35%;
+    border-color: rgb(35, 70, 110);
+    opacity: 0.5;
+    border-radius: 20px;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+.searchCity::placeholder {
+    color: black;
+}
+
+.btn {
+    font-size: 1rem;
+    border-radius: 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(35, 78, 110);
+}
+
+.heading {
+
+}
+
+.container {
+    min-height: 100vh;
+}
