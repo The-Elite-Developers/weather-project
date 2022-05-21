@@ -1,4 +1,4 @@
-const API_KEY = "1032c5bb249668ca063747a1198441d9";
+const API_KEY = "XXXXX";
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
