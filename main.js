@@ -1,11 +1,11 @@
 const API_KEY = "1032c5bb249668ca063747a1198441d9";
 
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 let date = document.getElementById("date");
 let time = document.getElementById("time");
 let cityName = document.getElementById("cityName");
 let searchCityName = document.getElementById("searchCityName");
-
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function convertEpoch(value) {
     var utcSeconds = value * 1000;
