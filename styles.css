@@ -53,6 +53,7 @@ h1 {
 }
 
 .city > h2 {
+  color: #ec9b3b;
   font-size: 2rem;
   font-weight: 400;
 }
@@ -75,12 +76,11 @@ h2 {
 }
 
 .date-time {
-  border: 2px solid rgb(236, 155, 59);
+  border: 2px solid rgb(247, 215, 22);
   border-radius: 20px;
   padding: 5px;
 }
 .weather-data {
-  border: 2px solid rgb(242, 76, 76);
   margin-top: 5px;
   border-radius: 20px;
   display: flex;
