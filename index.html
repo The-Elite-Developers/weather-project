@@ -18,10 +18,25 @@
         placeholder="Enter City"
       /><button class="btn" id="searchCityName">Search</button>
     </div>
-    <div class="container">
+    <div class="error no-display" id="error">
+      <h2 id="error-msg"></h2>
+    </div>
+    <div class="container no-display" id="container">
+      <div class="city">
+        <h2 id="city"></h2>
+      </div>
       <div class="date-time" id="date-time">
         <h2 class="date" id="date"></h2>
         <h2 class="time" id="time"></h2>
+      </div>
+      <div class="weather-data" id="weather-data">
+        <h2 id="temp"></h2>
+        <div class="min-max">
+          <h2 id="min_temp"></h2>
+          <h2 id="max_temp"></h2>
+        </div>
+        <h2 id="pressure"></h2>
+        <h2 id="humidity"></h2>
       </div>
     </div>
     <script src="./main.js"></script>
