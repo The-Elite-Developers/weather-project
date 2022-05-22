@@ -15,6 +15,7 @@ const months = [
   "December",
 ];
 
+// Some Functions
 let date = document.getElementById("date");
 let time = document.getElementById("time");
 let cityName = document.getElementById("cityName");
@@ -26,7 +27,8 @@ let pressure = document.getElementById("pressure");
 let humidity = document.getElementById("humidity");
 let city = document.getElementById("city");
 let container = document.getElementById("container");
-let error = document.getElementById("error-msg");
+let errorContainer = document.getElementById("error-container");
+let errorMsg = document.getElementById("error-msg");
 
 function convertEpoch(value) {
   var utcSeconds = value * 1000;
@@ -45,67 +47,52 @@ function convertEpoch(value) {
   };
 }
 
-searchCityName.addEventListener("click", getWeather);
-
 function kelvinToCelcius(value) {
   return parseFloat(value - 273.15).toFixed(2);
 }
 
-// function getWeather() {
-
-//     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName.value}&appid=${API_KEY}`)
-//     .then(response => {if (response.status >= 200 && response.status <= 299) {
-//         return response.json();
-//       } else {
-//         throw Error(response.statusText);
-//       }})
-//     .then(data => {
-//         // if(data.id){
-//             container.classList.remove("no-display");
-//             city.innerText = data.name;
-//             dateTime = convertEpoch(data.dt);
-//             date.innerText = dateTime.currentDate;
-//             time.innerText = dateTime.currentTime;
-//             temp.innerHTML = `Temp - ${kelvinToCelcius(data.main.temp)}<sup>o</sup>C`;
-//             minTemp.innerHTML = `Min Temp - ${kelvinToCelcius(data.main.temp_min)}<sup>o</sup>C`;
-//             maxTemp.innerHTML = `Max Temp - ${kelvinToCelcius(data.main.temp_max)}<sup>o</sup>C`;
-//             pressure.innerText = 'Pressure - ' + data.main.pressure + ' hPa';
-//             humidity.innerText = 'Humidity - ' + data.main.humidity + ' %';
-//         // }else{
-//         //     error.classList.remove("no-display");
-//         //     error.innerText = data.message;
-//         // }
-
-//     })
-//     .catch((err) =>{
-//         error.classList.remove("no-display");
-//         error.innerText = "City not Found";
-//         console.log(err);
-//     });
-// }
-
-async function getWeather() {
+// Main API call
+let getWeather = async (e) => {
+  e.preventDefault();
   try {
-    let response = await fetch(
+    const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${cityName.value}&appid=${API_KEY}`
-    );
-    const data = await response.json();
-    container.classList.remove("no-display");
-    city.innerText = data.name;
-    dateTime = convertEpoch(data.dt);
-    date.innerText = dateTime.currentDate;
-    time.innerText = dateTime.currentTime;
-    temp.innerHTML = `Temp - ${kelvinToCelcius(data.main.temp)}<sup>o</sup>C`;
-    minTemp.innerHTML = `Min Temp - ${kelvinToCelcius(
-      data.main.temp_min
-    )}<sup>o</sup>C`;
-    maxTemp.innerHTML = `Max Temp - ${kelvinToCelcius(
-      data.main.temp_max
-    )}<sup>o</sup>C`;
-    pressure.innerText = "Pressure - " + data.main.pressure + " hPa";
-    humidity.innerText = "Humidity - " + data.main.humidity + " %";
-  } catch (error) {
-    error.classList.remove("no-display");
-    error.innerText = "City not Found";
+    ); // API call
+    const data = await response.json(); // API response
+    if (data.cod !== 200) {
+      // If API call is not successfull
+      container.classList.contains("no-display") ||
+        container.classList.add("no-display"); // To change the result display if city is not found
+      errorContainer.classList.remove("no-display");
+      errorMsg.innerText = data.message.toUpperCase();
+    } else {
+      // If API call is successfull
+      console.log(data);
+      errorContainer.classList.contains("no-display") ||
+        errorContainer.classList.add("no-display");
+      console.log(data);
+      container.classList.remove("no-display");
+      city.innerText = `${data.name}, ${data.sys.country}`;
+      dateTime = convertEpoch(data.dt);
+      date.innerText = dateTime.currentDate;
+      time.innerText = dateTime.currentTime;
+      temp.innerHTML = `<span class="parameter">Temp</span> - ${kelvinToCelcius(
+        data.main.temp
+      )}<span class="metric-unit"><sup>o</sup>C</span>`;
+      minTemp.innerHTML = `<span class="parameter">Min Temp</span> - ${kelvinToCelcius(
+        data.main.temp_min
+      )}<span class="metric-unit"><sup>o</sup>C</span>`;
+      maxTemp.innerHTML = `<span class="parameter">Max Temp</span> - ${kelvinToCelcius(
+        data.main.temp_max
+      )}<span class="metric-unit"><sup>o</sup>C</span>`;
+      pressure.innerHTML = `<span class="parameter">Pressure</span> - ${data.main.pressure} <span class="metric-unit">hPa<span>`;
+      humidity.innerHTML = `<span class="parameter">Humidity</span> - ${data.main.humidity} <span class="metric-unit">%</span>`;
+    }
+    cityName.value = ""; // To remove the city name in the element once the search is complete
+  } catch (e) {
+    console.log(e);
   }
-}
+};
+
+// Event listeners
+searchCityName.addEventListener("click", getWeather);
