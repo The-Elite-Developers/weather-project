@@ -43,9 +43,9 @@ function convertEpoch(value) {
 
   return {
     currentDate: `${date} ${month} ${year}`,
-    currentTime: `${hours > 12 ? hours - 12 : hours}:${mins}:${secs} ${
-      hours >= 12 ? "PM" : "AM"
-    }`,
+    currentTime: `${
+      hours > 12 ? (hours - 12 < 10 ? `0${hours - 12}` : hours - 12) : hours
+    }:${mins}:${secs} ${hours >= 12 ? "PM" : "AM"}`,
   };
 }
 
