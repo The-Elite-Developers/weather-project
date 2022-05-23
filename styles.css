@@ -95,6 +95,7 @@ h2 {
 
 .weather-data {
   margin-top: 30px;
+  margin-bottom: 30px;
   border-radius: 20px;
   display: flex;
   flex-direction: row;
