@@ -18,6 +18,8 @@ const months = [
 // Some Functions
 let date = document.getElementById("date");
 let time = document.getElementById("time");
+let weather = document.getElementById("weather");
+let weatherIcon = document.getElementById("weather-icon");
 let cityName = document.getElementById("cityName");
 let searchCityName = document.getElementById("searchCityName");
 let temp = document.getElementById("temp");
@@ -53,6 +55,14 @@ function kelvinToCelcius(value) {
   return parseFloat(value - 273.15).toFixed(2);
 }
 
+function capitalize(str) {
+  let arr = str.split(" ");
+  let newarr = arr.map(
+    (element) => element.charAt(0).toUpperCase() + element.slice(1)
+  );
+  return newarr.join(" ");
+}
+
 // Main API call
 let getWeather = async (e) => {
   e.preventDefault();
@@ -69,6 +79,7 @@ let getWeather = async (e) => {
       errorMsg.innerText = data.message.toUpperCase();
     } else {
       // If API call is successfull
+      console.log(data);
       errorContainer.classList.contains("no-display") ||
         errorContainer.classList.add("no-display");
       container.classList.remove("no-display");
@@ -76,17 +87,23 @@ let getWeather = async (e) => {
       dateTime = convertEpoch(data.dt);
       date.innerText = dateTime.currentDate;
       time.innerText = dateTime.currentTime;
-      temp.innerHTML = `<span class="parameter">Temp</span> - ${kelvinToCelcius(
+      weather.innerHTML = `${capitalize(
+        data.weather[0].description
+      )}, ${kelvinToCelcius(
         data.main.temp
       )}<span class="metric-unit"><sup>o</sup>C</span>`;
-      minTemp.innerHTML = `<span class="parameter">Min Temp</span> - ${kelvinToCelcius(
+      console.log(
+        `<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png alt="Weather Icon" />`
+      );
+      weatherIcon.innerHTML = `<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="Weather Icon" />`;
+      minTemp.innerHTML = `<span class="parameter">Min Temp</span> : ${kelvinToCelcius(
         data.main.temp_min
       )}<span class="metric-unit"><sup>o</sup>C</span>`;
-      maxTemp.innerHTML = `<span class="parameter">Max Temp</span> - ${kelvinToCelcius(
+      maxTemp.innerHTML = `<span class="parameter">Max Temp</span> : ${kelvinToCelcius(
         data.main.temp_max
       )}<span class="metric-unit"><sup>o</sup>C</span>`;
-      pressure.innerHTML = `<span class="parameter">Pressure</span> - ${data.main.pressure} <span class="metric-unit">hPa<span>`;
-      humidity.innerHTML = `<span class="parameter">Humidity</span> - ${data.main.humidity} <span class="metric-unit">%</span>`;
+      pressure.innerHTML = `<span class="parameter">Pressure</span> : ${data.main.pressure} <span class="metric-unit">hPa<span>`;
+      humidity.innerHTML = `<span class="parameter">Humidity</span> : ${data.main.humidity} <span class="metric-unit">%</span>`;
     }
     cityName.value = ""; // To remove the city name in the element once the search is complete
   } catch (e) {
