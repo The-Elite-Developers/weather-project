@@ -34,7 +34,7 @@ function convertEpoch(value) {
   var utcSeconds = value * 1000;
   var d = new Date(utcSeconds);
   console.log(d.toLocaleString());
-  let date = d.getDate();
+  let date = d.getDate() < 10 ? `0${g.getDate()}` : d.getDate();
   let month = months[d.getMonth()];
   let year = d.getFullYear();
   let hours = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
