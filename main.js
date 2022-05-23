@@ -37,13 +37,15 @@ function convertEpoch(value) {
   let date = d.getDate();
   let month = months[d.getMonth()];
   let year = d.getFullYear();
-  let hours = d.getHours();
-  let mins = d.getMinutes();
-  let secs = d.getSeconds();
+  let hours = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+  let mins = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+  let secs = d.getSeconds() < 10 ? `0${d.getSeconds()}` : d.getSeconds();
 
   return {
     currentDate: `${date} ${month} ${year}`,
-    currentTime: `${hours}:${mins}:${secs}`,
+    currentTime: `${hours > 12 ? hours - 12 : hours}:${mins}:${secs} ${
+      hours >= 12 ? "PM" : "AM"
+    }`,
   };
 }
 
