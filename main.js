@@ -69,10 +69,8 @@ let getWeather = async (e) => {
       errorMsg.innerText = data.message.toUpperCase();
     } else {
       // If API call is successfull
-      console.log(data);
       errorContainer.classList.contains("no-display") ||
         errorContainer.classList.add("no-display");
-      console.log(data);
       container.classList.remove("no-display");
       city.innerText = `${data.name}, ${data.sys.country}`;
       dateTime = convertEpoch(data.dt);
